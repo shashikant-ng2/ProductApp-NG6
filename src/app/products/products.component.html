@@ -1,0 +1,100 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" href="#">Product List</a>
+</nav>
+
+<div class="container">
+  <span *ngIf="showSuccessBadge" class="badge badge-success bottom-margin">New Product Added</span>
+  <div class="reglist">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Product Description</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of productLists; let i = index">
+          <td>{{ product.Name }}</td>
+          <td>{{ product.Description }}</td>
+          <td>
+            <button type="button" class="btn btn-info" (click)="editProductDetails(product.ProductId)">Edit</button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-danger" (click)="viewProductDetail(product.ProductId)">View</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="text-right">
+      <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="addNewProduct()">New</button>
+    </div>
+  </div>
+
+  <!-- View Product -->
+  <br>
+  <div class="regentry" *ngIf="showViewProduct">
+    <div class="form-group row">
+      <label for="productname" class="col-2 col-form-label">Product Name</label>
+      <div class="col-10">
+        <label class="col-form-label">{{product.Name}}</label>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="description" class="col-2 col-form-label">Product Description</label>
+      <div class="col-10">
+        <label class="col-form-label">{{product.Description}}</label>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="url" class="col-2 col-form-label">URL</label>
+      <div class="col-10">
+        <label class="col-form-label">{{product.Url}}</label>
+      </div>
+    </div>
+    <div *ngFor="let category of product.Categories; let i = index" class="form-group row">
+      <label for="category" class="col-2 col-form-label">Category</label>
+      <div class="col-10">
+        <label class="col-form-label">{{category.Name}}</label>
+      </div>
+    </div>
+  </div>
+  <!-- Create/Edit Product -->
+  <br>
+  <div class="regentry" *ngIf="showAddProductPanel">
+    <form [formGroup]="productForm" (ngSubmit)="onSave()">
+      <div class="form-group row">
+        <label for="productName-input" class="col-2 col-form-label">Product Name</label>
+        <div class="col-10">
+          <input class="form-control" type="text" formControlName="productName" name="productName" [ngClass]="{ 'is-invalid': submitted && formControl.productName.errors }">
+          <div *ngIf="submitted && formControl.productName.errors" class="invalid-feedback">
+              <div *ngIf="formControl.productName.errors.required">Product Name is required</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="description-input" class="col-2 col-form-label">Product Description</label>
+        <div class="col-10">
+          <input class="form-control" type="text" formControlName="productDescription" name="lastName">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="url-input" class="col-2 col-form-label">URL</label>
+        <div class="col-10">
+          <input class="form-control" type="text" formControlName="productURL" name="email">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="category" class="col-2 col-form-label">Category</label>
+        <div class="col-10 dropdown">
+          <ng-multiselect-dropdown [placeholder]="'Select Categories'" [data]="categories" [(ngModel)]="selectedCategories" [settings]="dropdownSettings"
+            formControlName="categories">
+          </ng-multiselect-dropdown>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success">{{submitType}}</button>
+      <button type="submit" class="btn btn-primary left-margin" (click)="onCancel()">Cancel</button>
+    </form>
+  </div>
+</div>

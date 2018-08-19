@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~font-awesome/css/font-awesome.css";
+body {
+  padding-top: 80px;
+}
+
+.template {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.left-margin {
+  margin-left: 10px;
+}
+
+.bottom-margin {
+  margin-bottom: 10px;
+}
