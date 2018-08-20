@@ -53,6 +53,11 @@ export class ProductsComponent implements OnInit {
     };
   }
 
+
+  closeModal() {
+    document.getElementById('myModal').style.display = 'none';
+  }
+
   getProducts(): void {
     this.productService.getProducts()
       .subscribe(products => this.productLists = products);
@@ -87,6 +92,9 @@ export class ProductsComponent implements OnInit {
       .subscribe(product => {
         this.product = product;
         this.showViewProduct = true;
+        setTimeout(() => {
+          document.getElementById('myModal').style.display = 'block';
+        }, 500);
       });
   }
 
